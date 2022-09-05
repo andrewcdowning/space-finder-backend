@@ -7,6 +7,7 @@ import { join } from 'path'
 export interface TableProps {
     tableName: string,
     primaryKey: string,
+    secondaryIndexes?: string[];
     createLambdaPath?: string,
     readLambdaPath?: string,
     updateLambdaPath?: string,
@@ -37,6 +38,7 @@ export class GenericTable {
 
     private initialize(){
         this.createTable();
+        this.addSecondaryIndexes();
         this.createLambdas();
         this.grantTableRights();
     }
@@ -49,6 +51,19 @@ export class GenericTable {
             tableName: this.props.tableName
         })
     }
+    private addSecondaryIndexes(){
+        if(this.props.secondaryIndexes) {
+            for ( const index of this.props.secondaryIndexes) {
+                this.table.addGlobalSecondaryIndex({
+                    indexName: index,
+                    partitionKey: {
+                        name: index,
+                        type: AttributeType.STRING
+                    },
+                })
+            }
+        }
+    };
     private createLambdas(){
         if (this.props.createLambdaPath) {
             this.createLambda = this.createSingleLambda(this.props.createLambdaPath)

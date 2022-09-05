@@ -1,12 +1,31 @@
-@endpoint = https://6fzxx7e8of.execute-api.us-west-2.amazonaws.com/prod/
-GET {{endpoint}}/hello/
+@endpoint = https://qq6rbp2vi8.execute-api.us-west-2.amazonaws.com/prod/
+
+
+GET {{endpoint}}/spaces/
+###
+
+GET {{endpoint}}/spaces?spaceId=8da9b148-e971-460b-8c70-837b8711bcbd
+###
+
+GET {{endpoint}}/spaces?Location=London
 ###
 
 POST {{endpoint}}/spaces/
 Content-Type: application/json
 
 {
-    "location": "London",
-    "name": "Best location"
+    "location": "Denver",
+    "name": "Best Ever"
 }
 ###
+
+PUT {{endpoint}}/spaces?spaceId=9f347f17-97c1-4863-bdbb-1bd3d307d129
+Content-Type: application/json
+
+{
+    "location": "Paris",
+    "name": "Another Location"
+}
+###
+
+DELETE  {{endpoint}}/spaces?spaceId=9e6ff172-73d2-4d70-be1b-c64ceba702f6
